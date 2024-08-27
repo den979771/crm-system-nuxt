@@ -1,5 +1,7 @@
 <script lang="ts" setup>
+import { account } from "~/lib/appwrite";
 import { useIsLoadingStore } from "~/store/auth.store";
+import { v4 as uuid } from "uuid";
 
 useHead({
   title: "Login",
@@ -10,7 +12,37 @@ const passwordRef = ref("");
 const nameRef = ref("");
 
 const isLoadingStore = useIsLoadingStore();
+const authStore = useAuthStore();
 const router = useRouter();
+
+const login = async () => {
+  isLoadingStore.set(true);
+  await account.createEmailPasswordSession(emailRef.value, passwordRef.value);
+  const response = await account.get();
+  if (response) {
+    authStore.set({
+      email: response.email,
+      name: response.name,
+      status: response.status,
+    });
+  }
+  emailRef.value = "";
+  passwordRef.value = "";
+  nameRef.value = "";
+
+  await router.push("/");
+  isLoadingStore.set(false);
+};
+
+const register = async () => {
+  await account.create(
+    uuid(),
+    emailRef.value,
+    passwordRef.value,
+    nameRef.value
+  );
+  await login();
+};
 </script>
 <template>
   <div class="flex items-center justify-center min-h-screen w-full">
@@ -32,8 +64,8 @@ const router = useRouter();
         />
         <Input placeholder="Name" type="name" class="mb-3" v-model="nameRef" />
         <div class="flex items-center justify-center gap-5">
-          <Button type="button">Login</Button>
-          <Button type="button">Register</Button>
+          <Button type="button" @click="login">Login</Button>
+          <Button type="button" @click="register">Register</Button>
         </div>
       </form>
     </div>

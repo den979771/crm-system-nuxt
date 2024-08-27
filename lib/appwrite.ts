@@ -1,5 +1,5 @@
-import { APP_WRITE_ID } from "@/app_contacts";
 import { Account, Client, Databases, Storage } from "appwrite";
+import { APP_WRITE_ID } from "./app_contacts";
 
 export const client = new Client();
 
