@@ -4,7 +4,7 @@ import { useIsLoadingStore } from "~/store/auth.store";
 import { v4 as uuid } from "uuid";
 
 useHead({
-  title: "Login",
+  title: "Login | SRM System",
 });
 
 const emailRef = ref("");
