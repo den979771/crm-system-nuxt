@@ -1,5 +1,5 @@
 export interface IBaseField {
-  $createAt: string;
+  $createdAt: string;
   $id: string;
 }
 
@@ -24,8 +24,8 @@ export enum EnumStatus {
 
 export interface IDeal extends IBaseField {
   comments: IComment[];
-  customers: ICustomer;
+  customer: ICustomer;
   name: string;
   price: number;
-  staus: EnumStatus;
+  status: EnumStatus;
 }

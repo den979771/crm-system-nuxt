@@ -4,7 +4,7 @@ export interface ICard {
   id: string;
   name: string;
   price: number;
-  $createAt: string;
+  $createdAt: string;
   companyName: string;
   status: string;
 }
